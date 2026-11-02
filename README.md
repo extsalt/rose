@@ -287,7 +287,22 @@
 
 ### Chapter 8: Verification Suites & Execution Handbook
 
-- **Execution Modes:**
+- **Unit Test Runner (24 Test Cases):**
+  - **PowerShell (Windows):**
+    ```powershell
+    .\test.ps1
+    # or
+    .\build.ps1 -Test
+    ```
+  - **Linux / macOS (Make):**
+    ```bash
+    make test
+    ```
+  - **Coverage Areas:**
+    - **Lexer Tests:** Sigil stripping (`$x` -> `x`), case-insensitive keywords, integer/float literals, string escape sequences (`\n`, `\t`, `\"`, `\$`), booleans, null, operators, delimiters, comment styles (`//`, `#`, `/* */`), and source location tracking.
+    - **Parser Tests:** Simple and chained variable assignments, operator precedence, parentheses overrides, left-associative operators, logical/unary expressions, `echo`, `if`/`else`, `while`, `return`, function declarations, parameter sigil stripping, function calls, AST serialization, and multi-error panic-mode recovery.
+
+- **CLI Execution Modes:**
   1. **Built-in Demonstration Suite:**
      ```bash
      .\rosec.exe
@@ -368,5 +383,12 @@
 - **Entry Point & Tooling:**
   - [`main.cpp`](main.cpp): CLI argument dispatcher, built-in test harness, and diagnostics printer.
   - [`build.ps1`](build.ps1): PowerShell automation build script for Windows targets.
-  - [`Makefile`](Makefile): Standard GNU Makefile for POSIX targets.
+  - [`test.ps1`](test.ps1): Direct runner script for executing the full unit test suite.
+  - [`Makefile`](Makefile): Standard GNU Makefile for POSIX targets (includes `make test`).
   - [`examples/`](examples/): Example programs ([`fibonacci.php`](examples/fibonacci.php), [`hello.php`](examples/hello.php)).
+
+- **Test Infrastructure (`tests/`):**
+  - [`tests/test_framework.h`](tests/test_framework.h): Zero-dependency test registration, colored reporter, and assertion macros.
+  - [`tests/test_lexer.cpp`](tests/test_lexer.cpp): Comprehensive unit tests for scanner, tokens, and location mapping.
+  - [`tests/test_parser.cpp`](tests/test_parser.cpp): Full syntax analysis, precedence, AST hierarchy, and diagnostic recovery tests.
+  - [`tests/test_main.cpp`](tests/test_main.cpp): Test suite entry point runner.
