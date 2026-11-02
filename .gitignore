@@ -1,0 +1,15 @@
+# Build artifacts
+rosec
+rosec.exe
+*.exe
+*.o
+*.obj
+*.out
+
+# Clangd & build database
+.cache/
+compile_commands.json
+
+# Editor artifacts
+.vscode/
+.idea/
